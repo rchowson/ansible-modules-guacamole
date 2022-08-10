@@ -217,6 +217,41 @@ options:
             - recording name for connection
         type: str
 
+    typescript_path:
+        description:
+            - typescript path for connection
+        type: str
+
+    typescript_name:
+        description:
+            - typescript name for connection
+        type: str
+
+    automatically_create_typescript_path:
+        description:
+            - automatically create typescript path for connection
+        type: bool
+
+    backspace_key_sends:
+        description:
+            - character to send when backspace key pressed
+        type: str
+
+    terminal_type:
+        description:
+            - terminal type for connection
+        type: str
+
+    execute_command:
+        description:
+            - command to execute on session start for connection
+        type: str
+
+    maximum_scrollback_size:
+        description:
+            - number of lines available in scrollback buffer for connection
+        type: int
+
     sftp_enable:
         description:
             - Should we enable sftp transfers for this connection?
@@ -425,7 +460,16 @@ def guacamole_populate_connection_payload(module_params):
         if module_params.get('rdp_ignore_server_certs'):
             payload['parameters']['ignore-cert'] = module_params['rdp_ignore_server_certs']
     elif module_params["protocol"] == "ssh":
-        parameters = ("private_key", "passphrase")
+        parameters = (
+            "private_key", 
+            "passphrase",
+            "typescript_path",
+            "typescript_name",
+            "automatically_create_typescript_path",
+            "backspace_key_sends",
+            "terminal_type",
+            "execute_command",
+            "maximum_scrollback_size")
         guacamole_add_parameter(payload, module_params, parameters, "ssh")
 
     return payload
@@ -534,6 +578,13 @@ def main():
         recording_path=dict(type='str', required=False),
         recording_include_keys=dict(type='bool', required=False),
         recording_name=dict(type='str', required=False),
+        typescript_path=dict(type='str', required=False),
+        typescript_name=dict(type='str', required=False),
+        automatically_create_typescript_path=dict(type='bool', default=False),
+        backspace_key_sends=dict(type='str', required=False),
+        terminal_type=dict(type='str', choices=['ansi', 'linux', 'vt100', 'vt220', 'xterm', 'xterm-256color'], required=False),
+        execute_command=dict(type='str', required=False),
+        maximum_scrollback_size=dict(type='int'),
         sftp_enable=dict(type='bool', default=False),
         sftp_port=dict(type='int', required=False),
         sftp_server_alive_interval=dict(type='int', required=False),
