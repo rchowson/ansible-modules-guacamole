@@ -227,7 +227,7 @@ options:
             - typescript name for connection
         type: str
 
-    automatically_create_typescript_path:
+    create_typescript_path:
         description:
             - automatically create typescript path for connection
         type: bool
@@ -465,7 +465,7 @@ def guacamole_populate_connection_payload(module_params):
             "passphrase",
             "typescript_path",
             "typescript_name",
-            "automatically_create_typescript_path",
+            "create_typescript_path",
             "backspace_key_sends",
             "terminal_type",
             "execute_command",
@@ -580,7 +580,7 @@ def main():
         recording_name=dict(type='str', required=False),
         typescript_path=dict(type='str', required=False),
         typescript_name=dict(type='str', required=False),
-        automatically_create_typescript_path=dict(type='bool', default=False),
+        create_typescript_path=dict(type='bool', default=False),
         backspace_key_sends=dict(type='str', required=False),
         terminal_type=dict(type='str', choices=['ansi', 'linux', 'vt100', 'vt220', 'xterm', 'xterm-256color'], required=False),
         execute_command=dict(type='str', required=False),
