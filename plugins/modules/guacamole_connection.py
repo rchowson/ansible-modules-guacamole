@@ -232,7 +232,7 @@ options:
             - automatically create typescript path for connection
         type: bool
 
-    backspace_key_sends:
+    backspace:
         description:
             - character to send when backspace key pressed
         type: str
@@ -242,12 +242,12 @@ options:
             - terminal type for connection
         type: str
 
-    execute_command:
+    command:
         description:
             - command to execute on session start for connection
         type: str
 
-    maximum_scrollback_size:
+    scrollback:
         description:
             - number of lines available in scrollback buffer for connection
         type: int
@@ -389,6 +389,13 @@ def guacamole_get_connection_details(base_url, validate_certs, datasource, conne
 
     return connection_details
 
+#def write_file(api_param, module_param=None):
+#    with open('connection.log', 'a') as l:
+#        l.write(api_param)
+#        l.write(" ")
+#        l.write(module_param)
+#        l.write('\n')
+
 
 def guacamole_add_parameter(payload, module_params, parameters, protocol=None):
     for parameter in parameters:
@@ -399,6 +406,7 @@ def guacamole_add_parameter(payload, module_params, parameters, protocol=None):
         api_parameter = parameter.replace("_", "-")
         if module_params.get(ansible_parameter):
             payload["parameters"][api_parameter] = module_params[ansible_parameter]
+#        write_file(api_parameter, repr(module_params[ansible_parameter]))
 
 
 def guacamole_populate_connection_payload(module_params):
@@ -434,6 +442,13 @@ def guacamole_populate_connection_payload(module_params):
         "recording_path",
         "recording_include_keys",
         "recording_name",
+        "typescript_path",
+        "typescript_name",
+        "create_typescript_path",
+        "backspace",
+        "terminal_type",
+        "command",
+        "scrollback",
         "sftp_port",
         "sftp_server_alive_interval",
         "sftp_hostname",
@@ -459,17 +474,11 @@ def guacamole_populate_connection_payload(module_params):
         guacamole_add_parameter(payload, module_params, parameters, "rdp")
         if module_params.get('rdp_ignore_server_certs'):
             payload['parameters']['ignore-cert'] = module_params['rdp_ignore_server_certs']
-    elif module_params["protocol"] == "ssh":
+
+    if module_params["protocol"] == "ssh":
         parameters = (
             "private_key", 
-            "passphrase",
-            "typescript_path",
-            "typescript_name",
-            "create_typescript_path",
-            "backspace_key_sends",
-            "terminal_type",
-            "execute_command",
-            "maximum_scrollback_size")
+            "passphrase")
         guacamole_add_parameter(payload, module_params, parameters, "ssh")
 
     return payload
@@ -581,10 +590,10 @@ def main():
         typescript_path=dict(type='str', required=False),
         typescript_name=dict(type='str', required=False),
         create_typescript_path=dict(type='bool', default=False),
-        backspace_key_sends=dict(type='str', required=False),
+        backspace=dict(type='str', required=False),
         terminal_type=dict(type='str', choices=['ansi', 'linux', 'vt100', 'vt220', 'xterm', 'xterm-256color'], required=False),
-        execute_command=dict(type='str', required=False),
-        maximum_scrollback_size=dict(type='int'),
+        command=dict(type='str', required=False),
+        scrollback=dict(type='int'),
         sftp_enable=dict(type='bool', default=False),
         sftp_port=dict(type='int', required=False),
         sftp_server_alive_interval=dict(type='int', required=False),
