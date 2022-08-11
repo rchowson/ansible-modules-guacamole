@@ -11,7 +11,7 @@
   tasks:
 
     - name: Add a new RDP connection
-      scicore.guacamole.guacamole_connection:
+      rchowson.guacamole.guacamole_connection:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -33,7 +33,7 @@
         fail_msg: "Failed creating a connection"
 
     - name: Update a RDP connection
-      scicore.guacamole.guacamole_connection:
+      rchowson.guacamole.guacamole_connection:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -55,7 +55,7 @@
         fail_msg: "Failed updating a connection"
 
     - name: Add a new guacamole user and grant access to 'test_connection_rdp'
-      scicore.guacamole.guacamole_user:
+      rchowson.guacamole.guacamole_user:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -63,7 +63,7 @@
         password: aaaaaaaa
         full_name: "John"
         email: "aaaaa@hotmail.com"
-        organization: "scicore"
+        organization: "rchowson"
         allowed_connections:
           - test_connection_rdp
       register: _add_user
@@ -76,7 +76,7 @@
         fail_msg: "Failed creating a user"
 
     - name: Update existing user
-      scicore.guacamole.guacamole_user:
+      rchowson.guacamole.guacamole_user:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -84,7 +84,7 @@
         password: aaaaaaaa
         full_name: "Bob"
         email: "aaaaa@hotmail.com"
-        organization: "scicore"
+        organization: "rchowson"
         allowed_connections:
           - test_connection_rdp
       register: _update_user
@@ -97,7 +97,7 @@
         fail_msg: "Failed creating a user"
 
     - name: Add a new connections group
-      scicore.guacamole.guacamole_connections_group:
+      rchowson.guacamole.guacamole_connections_group:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -113,7 +113,7 @@
         fail_msg: "Failed creating a connections group"
 
     - name: Update a connections group
-      scicore.guacamole.guacamole_connections_group:
+      rchowson.guacamole.guacamole_connections_group:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -130,7 +130,7 @@
         fail_msg: "Failed updating a connections group"
 
     - name: Add a child connections group
-      scicore.guacamole.guacamole_connections_group:
+      rchowson.guacamole.guacamole_connections_group:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -147,7 +147,7 @@
         fail_msg: "Failed creating a child connections group"
 
     - name: Add a connection in the child connections group
-      scicore.guacamole.guacamole_connection:
+      rchowson.guacamole.guacamole_connection:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -169,7 +169,7 @@
         fail_msg: "Failed creating a child connection"
 
     - name: Force deletion of group of connections
-      scicore.guacamole.guacamole_connections_group:
+      rchowson.guacamole.guacamole_connections_group:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -187,7 +187,7 @@
         fail_msg: "Failed deleting a child connections group"
 
     - name: Delete a user
-      scicore.guacamole.guacamole_user:
+      rchowson.guacamole.guacamole_user:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -202,7 +202,7 @@
         fail_msg: "Failed deleting a user"
 
     - name: Delete a connection
-      scicore.guacamole.guacamole_connection:
+      rchowson.guacamole.guacamole_connection:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -217,7 +217,7 @@
         fail_msg: "Failed deleting a connection"
 
     - name: Delete a connections group
-      scicore.guacamole.guacamole_connections_group:
+      rchowson.guacamole.guacamole_connections_group:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -234,7 +234,7 @@
         fail_msg: "Failed deleting a connections group"
 
     - name: Update password guacadmin user
-      scicore.guacamole.guacamole_user:
+      rchowson.guacamole.guacamole_user:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: "{{ local_guacamole_password }}"
@@ -242,7 +242,7 @@
         password: newpassword
 
     - name: Update password guacadmin user again
-      scicore.guacamole.guacamole_user:
+      rchowson.guacamole.guacamole_user:
         base_url: "{{ local_guacamole_url }}"
         auth_username: "{{ local_guacamole_user }}"
         auth_password: newpassword
